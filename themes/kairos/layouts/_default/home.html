@@ -1,0 +1,33 @@
+{{ define "title" }}{{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<section class="hero">
+  <div class="hero-content">
+    <h1>Kairos Prison Ministry</h1>
+    <p class="hero-subtitle">WTSP Chapter</p>
+    <p class="hero-text">{{ .Site.Params.vision }}</p>
+  </div>
+</section>
+
+<section class="mission">
+  <div class="container">
+    <h2>Our Mission</h2>
+    <p>{{ .Site.Params.mission }}</p>
+  </div>
+</section>
+
+<section class="vision">
+  <div class="container">
+    <h2>Our Vision</h2>
+    <p>{{ .Site.Params.vision }}</p>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>Get Involved</h2>
+    <p>Interested in serving with Kairos? We'd love to hear from you.</p>
+    <a href="/contact/" class="btn">Contact Us</a>
+  </div>
+</section>
+{{ end }}

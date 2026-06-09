@@ -1,0 +1,129 @@
+{{ define "title" }}Team Dashboard | {{ .Site.Title }}{{ end }}
+
+{{ define "main" }}
+<section class="members-gate" id="gate">
+  <div class="container">
+    <h1>Team Member Login</h1>
+    <p>Enter the team password to access the Kairos 56 dashboard.</p>
+    <form id="login-form" onsubmit="return checkPassword()">
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <p id="error" class="error" style="display:none">Incorrect password. Try again.</p>
+  </div>
+</section>
+
+<section class="members-content" id="content" style="display:none">
+  <div class="container">
+    <h1>Kairos 56 — Team Dashboard</h1>
+    <p class="event-info"><strong>September 17–20, 2026</strong> &middot; WTSP</p>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <h2>Schedule</h2>
+        <table>
+          <tr><th>#</th><th>Date</th><th>Notes</th></tr>
+          <tr><td>1</td><td>Sat, July 18</td><td></td></tr>
+          <tr><td>2</td><td>Sat, July 25</td><td></td></tr>
+          <tr><td>3</td><td>Sat, Aug 1</td><td></td></tr>
+          <tr><td>4</td><td>Sat, Aug 8</td><td></td></tr>
+          <tr><td>5</td><td>Sat, Aug 15</td><td></td></tr>
+          <tr><td>6</td><td>Sat, Aug 22</td><td></td></tr>
+          <tr><td>7</td><td>Sat, Aug 29</td><td></td></tr>
+          <tr><td>—</td><td>Sat, Sept 5</td><td>Skip — Labor Day</td></tr>
+          <tr><td>8</td><td>Sat, Sept 12</td><td>Final prep</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>Announcements</h2>
+        <p><em>Updates coming as the team forms.</em></p>
+      </div>
+
+      <div class="card">
+        <h2>Team Roster</h2>
+        <p><em>Roster being populated.</em></p>
+      </div>
+
+      <div class="card">
+        <h2>Tasks & Assignments</h2>
+        <p><em>Assignments coming soon.</em></p>
+      </div>
+
+      <div class="card">
+        <h2>Supply List</h2>
+        <p><em>Supply list being compiled.</em></p>
+      </div>
+
+      <div class="card">
+        <h2>Contact</h2>
+        <p>Questions? Reach out to Erik directly.</p>
+      </div>
+    </div>
+
+    <p class="logout"><a href="#" onclick="logout()">Log out</a></p>
+  </div>
+</section>
+
+<script>
+// Password is SHA-256 hashed. Change PW_HASH when changing the password.
+// Current password: (set by Erik)
+var PW_HASH = "{{ .Site.Params.members_password_hash | default "REPLACE_ME" }}";
+
+function checkPassword() {
+  var input = document.getElementById("password").value;
+  var hash = sha256(input);
+  if (hash === PW_HASH) {
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("content").style.display = "block";
+    sessionStorage.setItem("kairos_auth", "1");
+  } else {
+    document.getElementById("error").style.display = "block";
+  }
+  return false;
+}
+
+function sha256(str) {
+  var buffer = new TextEncoder().encode(str);
+  return crypto.subtle.digest("SHA-256", buffer).then(function(hash) {
+    return Array.from(new Uint8Array(hash)).map(function(b) {
+      return b.toString(16).padStart(2, "0");
+    }).join("");
+  });
+}
+
+// Check if already authenticated this session
+if (sessionStorage.getItem("kairos_auth") === "1") {
+  document.getElementById("gate").style.display = "none";
+  document.getElementById("content").style.display = "block";
+}
+
+function logout() {
+  sessionStorage.removeItem("kairos_auth");
+  document.getElementById("gate").style.display = "block";
+  document.getElementById("content").style.display = "none";
+}
+
+// Fix sha256 — crypto.subtle.digest returns a promise, so the sync checkPassword
+// can't use await. We need to restructure.
+// Override checkPassword to handle the async hash properly.
+document.getElementById("login-form").onsubmit = function(e) {
+  e.preventDefault();
+  var input = document.getElementById("password").value;
+  var buffer = new TextEncoder().encode(input);
+  crypto.subtle.digest("SHA-256", buffer).then(function(hash) {
+    var hex = Array.from(new Uint8Array(hash)).map(function(b) {
+      return b.toString(16).padStart(2, "0");
+    }).join("");
+    if (hex === PW_HASH) {
+      document.getElementById("gate").style.display = "none";
+      document.getElementById("content").style.display = "block";
+      sessionStorage.setItem("kairos_auth", "1");
+      document.getElementById("error").style.display = "none";
+    } else {
+      document.getElementById("error").style.display = "block";
+    }
+  });
+};
+</script>
+{{ end }}
