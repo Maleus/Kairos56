@@ -5,7 +5,4 @@
 [build.environment]
   HUGO_VERSION = "0.163.0"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# No catch-all redirect needed — Hugo routes handle all pages natively
