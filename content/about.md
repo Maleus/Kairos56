@@ -8,7 +8,7 @@ Kairos Prison Ministry International is a Christian ministry serving incarcerate
 
 ## The WTSP Chapter
 
-The WTSP chapter serves [prison/facility name] and is run entirely by volunteers from local churches. Our team is made up of men who have experienced the transforming power of Christ and want to share that hope with those who need it most.
+The WTSP chapter serves West Tennessee State Penitentiary and is run entirely by volunteers from local churches. Our team is made up of men who have experienced the transforming power of Christ and want to share that hope with those who need it most.
 
 ## Kairos 56
 
