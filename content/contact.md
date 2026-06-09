@@ -6,7 +6,7 @@ title: "Contact Us"
 
 Interested in serving with Kairos WTSP? Have questions about Kairos 56? We'd love to hear from you.
 
-**Email:** [coming soon]
+**Email:** erikjd21[at]gmail.com
 
 **Mail:**  
 Kairos WTSP  
