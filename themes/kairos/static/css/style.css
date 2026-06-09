@@ -1,13 +1,14 @@
 /* Kairos WTSP — Clean, warm, ministry-appropriate */
 
 :root {
-  --bg: #fafaf8;
-  --text: #2d2d2a;
-  --muted: #6b6b65;
-  --accent: #8b4513;
-  --accent-light: #a0522d;
+  --bg: #f8fafc;
+  --text: #1e293b;
+  --muted: #64748b;
+  --accent: #1e40af;
+  --accent-light: #2563eb;
+  --accent-bg: #eff6ff;
   --card-bg: #fff;
-  --border: #e0dcd5;
+  --border: #e2e8f0;
   --radius: 8px;
 }
 
@@ -66,7 +67,7 @@ nav {
 
 /* Hero */
 .hero {
-  background: linear-gradient(135deg, #8b4513 0%, #5c2e0a 100%);
+  background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #1e3a8a 100%);
   color: #fff;
   padding: 5rem 2rem;
   text-align: center;
@@ -100,7 +101,7 @@ section { padding: 4rem 2rem; }
 
 .mission p, .vision p { font-size: 1.05rem; color: var(--muted); max-width: 600px; margin: 0 auto; }
 
-.cta { background: #f0ebe3; }
+.cta { background: var(--accent-bg); }
 
 .cta p { margin-bottom: 1.5rem; color: var(--muted); }
 
@@ -119,6 +120,22 @@ section { padding: 4rem 2rem; }
 }
 
 .btn:hover { background: var(--accent-light); }
+
+/* Donate button */
+.btn-donate {
+  background: #e11d48;
+  color: #fff !important;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.85rem !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-donate:hover { background: #be123c; }
 
 /* Page content */
 .page h1 {
