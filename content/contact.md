@@ -8,6 +8,8 @@ Interested in serving with Kairos WTSP? Have questions about Kairos 56? We'd lov
 
 **Email:** erikjd21[at]gmail.com
 
+**Phone:** 901-859-3042
+
 **Mail:**  
 Kairos WTSP  
 [Address coming soon]
