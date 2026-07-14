@@ -1,0 +1,271 @@
+---
+title: "Team Application"
+description: "Apply to serve on the Kairos 56 team."
+layout: "single"
+---
+
+<style>
+.apply-form { max-width: 780px; margin: 0 auto; }
+.apply-form fieldset { border: 1px solid #d1d5db; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; background: #fff; }
+.apply-form legend { font-weight: 700; font-size: 1.1rem; color: #1e40af; padding: 0 0.5rem; }
+.apply-form label { display: block; font-weight: 600; font-size: 0.85rem; margin: 0.75rem 0 0.25rem; color: #374151; }
+.apply-form input, .apply-form select, .apply-form textarea { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.95rem; font-family: inherit; box-sizing: border-box; }
+.apply-form .row { display: flex; gap: 1rem; }
+.apply-form .row > div { flex: 1; }
+.apply-form .checkbox-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
+.apply-form .checkbox-row input[type="checkbox"] { width: auto; }
+.apply-form .checkbox-row label { margin: 0; font-weight: 400; }
+.apply-form .btn-row { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.apply-form button { padding: 0.75rem 1.5rem; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+.btn-generate { background: #1e40af; color: #fff; }
+.btn-generate:hover { background: #1e3a8a; }
+.btn-print { background: #059669; color: #fff; display: none; }
+.btn-print:hover { background: #047857; }
+.btn-reset { background: #e5e7eb; color: #374151; }
+.btn-reset:hover { background: #d1d5db; }
+.required::after { content: " *"; color: #dc2626; }
+
+/* Generated application preview */
+#app-preview { display: none; margin-top: 2rem; }
+#app-preview.active { display: block; }
+.app-doc { background: #fff; border: 1px solid #d1d5db; padding: 2rem; font-size: 0.9rem; line-height: 1.6; }
+.app-doc h2 { color: #1e40af; font-size: 1.2rem; margin-top: 0; }
+.app-doc .field { margin-bottom: 0.5rem; }
+.app-doc .field strong { display: inline-block; min-width: 180px; }
+.app-doc hr { margin: 1.5rem 0; border: 0; border-top: 2px solid #1e40af; }
+.app-doc .sig-line { border-bottom: 1px solid #000; display: inline-block; min-width: 250px; margin: 0 0.5rem; }
+@media print {
+  body * { visibility: hidden; }
+  #app-preview, #app-preview * { visibility: visible; }
+  #app-preview { position: absolute; left: 0; top: 0; width: 100%; }
+  .btn-row { display: none !important; }
+}
+</style>
+
+<div class="apply-form">
+
+<h2>Kairos 56 — Team Application</h2>
+<p style="color:#6b7280;margin-bottom:1.5rem;">Fill out the form below, then generate a printable application. <strong>All fields marked with * are required.</strong></p>
+
+<form id="team-app" onsubmit="return generateApp()">
+
+<!-- PERSONAL INFO -->
+<fieldset>
+  <legend>Personal Information</legend>
+  <div class="row">
+    <div><label class="required">First Name (on Driver's License)</label><input type="text" id="first_name" required></div>
+    <div><label class="required">Last Name (on Driver's License)</label><input type="text" id="last_name" required></div>
+  </div>
+  <div class="row">
+    <div><label>First Name for Name Tag</label><input type="text" id="name_tag" placeholder="If different from above"></div>
+    <div><label class="required">Date of Birth</label><input type="date" id="dob" required></div>
+  </div>
+  <label class="required">Gender</label>
+  <select id="gender" required><option value="">-- Select --</option><option>Male</option><option>Female</option></select>
+  <label class="required">Role</label>
+  <select id="role" required><option value="">-- Select --</option><option>Clergy</option><option>Musician</option><option>Layperson</option></select>
+</fieldset>
+
+<!-- CONTACT INFO -->
+<fieldset>
+  <legend>Contact Information</legend>
+  <label class="required">Home Address</label><input type="text" id="address" required>
+  <div class="row">
+    <div><label class="required">City</label><input type="text" id="city" required></div>
+    <div><label class="required">State</label><input type="text" id="state" required maxlength="2" placeholder="TN"></div>
+    <div><label class="required">Zip</label><input type="text" id="zip" required></div>
+  </div>
+  <div class="row">
+    <div><label class="required">Email</label><input type="email" id="email" required></div>
+    <div><label class="required">Cell Phone</label><input type="tel" id="cell_phone" required placeholder="901-555-1234"></div>
+  </div>
+  <label>Home Phone</label><input type="tel" id="home_phone" placeholder="901-555-1234">
+  <label>Driver's License # & State</label><input type="text" id="drivers_license" placeholder="TN-12345678">
+</fieldset>
+
+<!-- CHURCH INFO -->
+<fieldset>
+  <legend>Church Information</legend>
+  <div class="row">
+    <div><label class="required">Church Name</label><input type="text" id="church_name" required></div>
+    <div><label>Denomination</label><input type="text" id="denomination"></div>
+  </div>
+  <label>Church Telephone</label><input type="tel" id="church_phone">
+  <div class="row">
+    <div><label>Pastor's Name</label><input type="text" id="pastor_name"></div>
+    <div><label>Pastor's Approval</label><select id="pastor_approval"><option value="">-- Select --</option><option>Yes</option><option>No</option></select></div>
+  </div>
+</fieldset>
+
+<!-- EXPERIENCE -->
+<fieldset>
+  <legend>Spiritual Background</legend>
+  <div class="checkbox-row"><input type="checkbox" id="attended_emmaus"><label>Attended Emmaus / Cursillo / similar weekend?</label></div>
+  <label>Year Attended</label><input type="text" id="emmaus_year" placeholder="YYYY">
+  <div class="checkbox-row"><input type="checkbox" id="reunion_group"><label>Participate in a Reunion Group?</label></div>
+  <div class="checkbox-row"><input type="checkbox" id="qualifying_weekend"><label>Attended a Qualifying Weekend?</label></div>
+</fieldset>
+
+<!-- KAIROS EXPERIENCE -->
+<fieldset>
+  <legend>Kairos Experience</legend>
+  <div class="checkbox-row"><input type="checkbox" id="never_served"><label>I have <strong>never</strong> served on a Kairos Team</label></div>
+  <label>Date Trained (if served before)</label><input type="text" id="date_trained" placeholder="MM/YYYY">
+  <div class="checkbox-row"><input type="checkbox" id="doc_trained"><label>Dept of Corrections Trained?</label></div>
+</fieldset>
+
+<!-- BACKGROUND -->
+<fieldset>
+  <legend>Background Information</legend>
+  <div class="checkbox-row"><input type="checkbox" id="ex_offender"><label>Are you an Ex-Offender?</label></div>
+  <div class="row">
+    <div><label>Year Released</label><input type="text" id="year_released" placeholder="YYYY"></div>
+    <div><label>DOC #</label><input type="text" id="doc_number"></div>
+  </div>
+  <div class="checkbox-row"><input type="checkbox" id="on_parole"><label>Currently on Parole?</label></div>
+  <div class="checkbox-row"><input type="checkbox" id="on_visitation"><label>On a visitation list for an inmate at this prison?</label></div>
+  <div class="row">
+    <div><label>If yes, Name</label><input type="text" id="visitation_name"></div>
+    <div><label>Relationship</label><input type="text" id="visitation_relationship"></div>
+  </div>
+</fieldset>
+
+<!-- AGREEMENT -->
+<fieldset>
+  <legend>Agreement</legend>
+  <div style="font-size:0.85rem;color:#374151;margin-bottom:1rem;">
+    <p>If accepted to serve on this Team, I agree to attend the Team Formation meetings, to participate in the continuing ministry of Kairos, to abide by the rules and policies of Kairos and the prison, and to support in good faith the activities and spirit of Kairos.</p>
+    <p>I certify that the information provided on this Application is complete and true to the best of my knowledge.</p>
+  </div>
+  <div class="checkbox-row"><input type="checkbox" id="agree_statement" required><label class="required">I have read and agree with the Mission Statement, Vision Statement, CORE Values, and Statement of Faith of Kairos Prison Ministry International, Inc.</label></div>
+  <div class="checkbox-row"><input type="checkbox" id="agree_manual" required><label class="required">I will obtain a current Kairos Inside manual, read it, and follow the program with no unauthorized additions or deletions.</label></div>
+</fieldset>
+
+<div class="btn-row">
+  <button type="submit" class="btn-generate">Generate Application</button>
+  <button type="button" class="btn-reset" onclick="resetForm()">Clear Form</button>
+  <button type="button" class="btn-print" id="printBtn" onclick="window.print()">🖨 Print / Save as PDF</button>
+</div>
+
+</form>
+
+<!-- PREVIEW -->
+<div id="app-preview">
+  <div class="app-doc" id="app-content"></div>
+</div>
+
+</div>
+
+<script>
+function $(id) { return document.getElementById(id); }
+function val(id) { return $(id).value.trim(); }
+function checked(id) { return $(id).checked; }
+
+function generateApp() {
+  var today = new Date().toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+
+  var html = `
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <h2>Western TN SP #55 — Team Application</h2>
+      <p><strong>Kairos 56</strong> | September 17–20, 2026 | WTSP</p>
+      <p style="color:#6b7280;">Generated: ${today}</p>
+    </div>
+
+    <hr>
+
+    <h3>Personal Information</h3>
+    <div class="field"><strong>Name:</strong> ${esc(val('first_name'))} ${esc(val('last_name'))}` +
+    (val('name_tag') ? ` (Name Tag: ${esc(val('name_tag'))})` : '') + `</div>
+    <div class="field"><strong>Date of Birth:</strong> ${esc(val('dob'))}</div>
+    <div class="field"><strong>Gender:</strong> ${esc(val('gender'))}</div>
+    <div class="field"><strong>Role:</strong> ${esc(val('role'))}</div>
+
+    <h3>Contact Information</h3>
+    <div class="field"><strong>Address:</strong> ${esc(val('address'))}</div>
+    <div class="field"><strong>City/State/Zip:</strong> ${esc(val('city'))}, ${esc(val('state'))} ${esc(val('zip'))}</div>
+    <div class="field"><strong>Email:</strong> ${esc(val('email'))}</div>
+    <div class="field"><strong>Cell Phone:</strong> ${esc(val('cell_phone'))}</div>` +
+    (val('home_phone') ? `<div class="field"><strong>Home Phone:</strong> ${esc(val('home_phone'))}</div>` : '') + `
+    <div class="field"><strong>Driver's License:</strong> ${esc(val('drivers_license') || '—')}</div>
+
+    <h3>Church Information</h3>
+    <div class="field"><strong>Church:</strong> ${esc(val('church_name'))}` +
+    (val('denomination') ? ` (${esc(val('denomination'))})` : '') + `</div>` +
+    (val('church_phone') ? `<div class="field"><strong>Church Phone:</strong> ${esc(val('church_phone'))}</div>` : '') +
+    (val('pastor_name') ? `<div class="field"><strong>Pastor:</strong> ${esc(val('pastor_name'))} — Approval: ${esc(val('pastor_approval') || '—')}</div>` : '') + `
+
+    <h3>Spiritual Background</h3>
+    <div class="field"><strong>Attended Emmaus/Cursillo:</strong> ${checked('attended_emmaus') ? 'Yes' + (val('emmaus_year') ? ' (' + esc(val('emmaus_year')) + ')' : '') : 'No'}</div>
+    <div class="field"><strong>Reunion Group:</strong> ${checked('reunion_group') ? 'Yes' : 'No'}</div>
+    <div class="field"><strong>Qualifying Weekend:</strong> ${checked('qualifying_weekend') ? 'Yes' : 'No'}</div>
+
+    <h3>Kairos Experience</h3>
+    <div class="field"><strong>Previously Served:</strong> ${checked('never_served') ? 'No (first time)' : 'Yes'}</div>` +
+    (val('date_trained') ? `<div class="field"><strong>Date Trained:</strong> ${esc(val('date_trained'))}</div>` : '') + `
+    <div class="field"><strong>DOC Trained:</strong> ${checked('doc_trained') ? 'Yes' : 'No'}</div>
+
+    <h3>Background</h3>
+    <div class="field"><strong>Ex-Offender:</strong> ${checked('ex_offender') ? 'Yes' : 'No'}</div>` +
+    (val('year_released') ? `<div class="field"><strong>Year Released:</strong> ${esc(val('year_released'))}</div>` : '') +
+    (val('doc_number') ? `<div class="field"><strong>DOC #:</strong> ${esc(val('doc_number'))}</div>` : '') + `
+    <div class="field"><strong>On Parole:</strong> ${checked('on_parole') ? 'Yes' : 'No'}</div>
+    <div class="field"><strong>On Visitation List:</strong> ${checked('on_visitation') ? 'Yes' : 'No'}</div>` +
+    (val('visitation_name') ? `<div class="field"><strong>Inmate Name:</strong> ${esc(val('visitation_name'))} — Relationship: ${esc(val('visitation_relationship') || '—')}</div>` : '') + `
+
+    <hr>
+
+    <h3>Agreement & Signature</h3>
+    <p style="font-size:0.85rem;">I certify that the information provided on this Application is complete and true to the best of my knowledge. I have read and agree with the Mission Statement, Vision Statement, CORE Values, and Statement of Faith of Kairos Prison Ministry International, Inc. I will obtain a current Kairos Inside manual, read it, and follow the program with no unauthorized additions or deletions.</p>
+
+    <div style="margin-top:2rem;">
+      <p><strong>Signature:</strong> <span class="sig-line"></span></p>
+      <p><strong>Date:</strong> <span class="sig-line"></span></p>
+    </div>
+
+    <hr>
+
+    <h3 style="color:#1e40af;">Statement of Faith</h3>
+    <p style="font-size:0.85rem;">The people of Kairos are called by God to share the love of Christ with those impacted by incarceration. Kairos encourages believers from a variety of Christian traditions to be volunteers in this Christ-filled ministry.</p>
+    <p style="font-size:0.85rem;"><strong>We in Kairos believe:</strong> The Bible is God's authoritative and inspired word for our faith and our lives. In the Trinity of the Father, Son, and Holy Spirit. In the deity, death and resurrection of Jesus Christ. Friendship with God is a free gift, for God so loved the world that He gave His one and only son so that whoever believes in Him shall not perish but have eternal life. The love of Jesus Christ motivates His followers to provide food for the hungry, drink to the thirsty, welcome to the stranger, clothes for the naked and visits to the sick and those in prison. In sharing the love and forgiveness of Jesus Christ with all incarcerated individuals, their families and to those who work with them inside and outside the correctional institution.</p>
+
+    <div style="margin-top:2rem;">
+      <p><strong>NAME (print):</strong> <span class="sig-line"></span></p>
+      <p><strong>SIGNATURE:</strong> <span class="sig-line"></span></p>
+      <p><strong>DATE:</strong> <span class="sig-line"></span></p>
+    </div>
+
+    <hr>
+
+    <div style="text-align:center;margin-top:2rem;padding:1rem;background:#eff6ff;border-radius:6px;">
+      <p><strong>Return completed application to:</strong></p>
+      <p>Erik Dominguez<br>
+      2531 Plantation Rd<br>
+      Brighton, TN 38011<br>
+      📞 901-859-3042<br>
+      ✉️ erikjd21@gmail.com</p>
+      <p style="font-size:0.8rem;color:#6b7280;">Or bring to the first team meeting — Saturday, July 25, 2026.</p>
+    </div>
+  `;
+
+  $('app-content').innerHTML = html;
+  $('app-preview').classList.add('active');
+  $('printBtn').style.display = 'inline-block';
+  $('app-preview').scrollIntoView({behavior: 'smooth'});
+
+  return false;
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/[&<>"']/g, function(c) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+function resetForm() {
+  document.getElementById('team-app').reset();
+  $('app-preview').classList.remove('active');
+  $('printBtn').style.display = 'none';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
