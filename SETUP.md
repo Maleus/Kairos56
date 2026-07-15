@@ -87,6 +87,13 @@ Cheapest; your chapter owns the data and server.
 6. **Settings → API**: copy the token into the Cloudflare env vars above,
    with `DOCUSEAL_URL=https://sign.yourdomain.org` (omit `DOCUSEAL_API_URL`).
 
+> **Kairos 56 production values** (this deployment, DocuSeal Cloud):
+> `DOCUSEAL_URL=https://docuseal.com` ·
+> `DOCUSEAL_API_URL=https://api.docuseal.com` ·
+> `DOCUSEAL_TEMPLATE_ID=5031712`
+> (template: "Kairos56_team_application", share link `/d/ABGeoSHG3YLHYb`).
+> The `DOCUSEAL_API_TOKEN` is set only in Cloudflare Pages env vars — never here.
+
 ## 4. Build the application template in DocuSeal
 
 1. DocuSeal → **New Template → Upload** your blank application PDF.
