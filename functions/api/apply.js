@@ -2,7 +2,12 @@
 // web application form and return the signing URL.
 //
 // Required Cloudflare Pages environment variables:
-//   DOCUSEAL_URL           e.g. https://sign.kairos56.org
+//   DOCUSEAL_URL           where signers go:
+//                            cloud:       https://docuseal.com
+//                            self-hosted: https://sign.yourdomain.org
+//   DOCUSEAL_API_URL       API base:
+//                            cloud:       https://api.docuseal.com
+//                            self-hosted: (omit — defaults to DOCUSEAL_URL + /api)
 //   DOCUSEAL_API_TOKEN     from DocuSeal → Settings → API
 //   DOCUSEAL_TEMPLATE_ID   numeric ID of the Team Application template
 //
@@ -65,7 +70,8 @@ export async function onRequestPost(context) {
     ],
   };
 
-  const res = await fetch(`${env.DOCUSEAL_URL}/api/submissions`, {
+  const apiBase = env.DOCUSEAL_API_URL || `${env.DOCUSEAL_URL}/api`;
+  const res = await fetch(`${apiBase}/submissions`, {
     method: 'POST',
     headers: {
       'X-Auth-Token': env.DOCUSEAL_API_TOKEN,

@@ -12,7 +12,7 @@ Rebuild kairos56.org as a clean, redeployable template for any Kairos chapter, w
 2. **Admin-editable team dashboard** (roster, schedule, announcements, team password) via Sveltia CMS — no coding required to update the site.
 3. **Real server-side team login** — the current password gate is client-side only; all "protected" content ships in the page source today.
 
-**Recommended hosting:** Cloudflare Pages (site, free) + one DigitalOcean droplet ($6–12/mo) running DocuSeal. Total cost: ~$6–12/mo plus domain.
+**Hosting (final decision):** Cloudflare Pages (site, free) + **DocuSeal Cloud Pro** (~$20/mo + $0.20/API doc) — chosen over self-hosting on DigitalOcean to keep operations to a single Cloudflare account with zero server maintenance. The repo still ships the self-host kit (`deploy/`) so future chapters can pick the $6/mo droplet route instead; the code supports both via env vars.
 
 ---
 

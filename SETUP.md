@@ -9,7 +9,8 @@ and a no-code content admin.
 auth, API glue) · DocuSeal (self-hosted e-signature, one small server) ·
 Sveltia CMS (content editing at `/admin/`).
 
-**Monthly cost:** ~$6–13 (one small DigitalOcean droplet; everything else free).
+**Monthly cost:** site hosting is free; e-signing is either DocuSeal Cloud Pro
+(~$20/mo, zero maintenance) or self-hosted on a ~$6/mo droplet — see §3.
 
 ---
 
@@ -39,7 +40,8 @@ Sveltia CMS (content editing at `/admin/`).
    |---|---|
    | `SESSION_SECRET` | long random string (e.g. `openssl rand -hex 32`) |
    | `ADMIN_SECRET` | long random string — this is your admin key for /team-admin/ |
-   | `DOCUSEAL_URL` | `https://sign.yourdomain.org` (after step 3) |
+   | `DOCUSEAL_URL` | cloud: `https://docuseal.com` · self-hosted: `https://sign.yourdomain.org` |
+   | `DOCUSEAL_API_URL` | cloud: `https://api.docuseal.com` · self-hosted: omit |
    | `DOCUSEAL_API_TOKEN` | from DocuSeal → Settings → API (after step 3) |
    | `DOCUSEAL_TEMPLATE_ID` | numeric template id (after step 4) |
 
@@ -47,7 +49,25 @@ Sveltia CMS (content editing at `/admin/`).
    `ADMIN_SECRET` and the new team password. (Stored as a hash in KV; the
    admin key never leaves Cloudflare env vars.)
 
-## 3. DocuSeal (the signing server)
+## 3. DocuSeal (the e-signature service)
+
+Two options — the site code supports both via env vars:
+
+### Option A: DocuSeal Cloud Pro — zero servers (~$20/mo + $0.20/API doc)
+
+Simplest to operate; nothing to maintain. Documents are stored on DocuSeal's
+cloud.
+
+1. Sign up at [docuseal.com](https://docuseal.com) and subscribe to **Pro**
+   (required for API access).
+2. **Settings → API**: copy the token into the Cloudflare env vars above,
+   with `DOCUSEAL_URL=https://docuseal.com` and
+   `DOCUSEAL_API_URL=https://api.docuseal.com`.
+3. Email sending is built in — no SMTP setup needed.
+
+### Option B: Self-hosted on a DigitalOcean droplet (~$6/mo)
+
+Cheapest; your chapter owns the data and server.
 
 1. Create a DigitalOcean droplet: **Ubuntu 24.04, Basic, $6/mo (1GB)**.
 2. DNS: add an `A` record `sign` → droplet IP (in Cloudflare DNS; set it to
@@ -64,7 +84,8 @@ Sveltia CMS (content editing at `/admin/`).
 4. Open `https://sign.yourdomain.org`, create the admin account.
 5. **Settings → SMTP**: add email credentials (a Gmail app password works, or
    free Brevo SMTP) so DocuSeal can email signing links and completed PDFs.
-6. **Settings → API**: copy the token into the Cloudflare env var above.
+6. **Settings → API**: copy the token into the Cloudflare env vars above,
+   with `DOCUSEAL_URL=https://sign.yourdomain.org` (omit `DOCUSEAL_API_URL`).
 
 ## 4. Build the application template in DocuSeal
 
@@ -107,10 +128,11 @@ Sveltia CMS (content editing at `/admin/`).
 
 ## 7. Ongoing maintenance
 
-- **DocuSeal updates:** `cd /opt/docuseal && docker compose pull && docker compose up -d`
-  (every month or two).
-- **Backups:** nightly automatic to `/opt/docuseal/backups` (14-day rotation).
-  Optionally enable DigitalOcean droplet snapshots (~$1/mo) for full-server backup.
+- **DocuSeal Cloud (Option A):** nothing to maintain.
+- **DocuSeal self-hosted (Option B):** update every month or two with
+  `cd /opt/docuseal && docker compose pull && docker compose up -d`.
+  Backups run nightly to `/opt/docuseal/backups` (14-day rotation); optionally
+  enable DigitalOcean droplet snapshots (~$1/mo) for full-server backup.
 - **Hugo/site:** no maintenance required; Cloudflare builds from git.
 
 ## Troubleshooting
