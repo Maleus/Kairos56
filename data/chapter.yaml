@@ -49,7 +49,7 @@ contact:
 
 # Online signing (DocuSeal)
 signing:
-  enabled: false        # flip to true once DocuSeal is deployed & env vars set
+  enabled: true         # DocuSeal Cloud configured (template 5031712)
   # The signing service URL, API token, and template IDs are configured as
   # Cloudflare Pages environment variables — never in this repo. See SETUP.md.
 

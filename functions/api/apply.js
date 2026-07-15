@@ -16,10 +16,10 @@
 // maps 1:1. (Field names are set in the DocuSeal template editor.)
 
 const TEXT_FIELDS = [
-  'first_name', 'last_name', 'name_tag', 'dob', 'gender', 'role',
+  'first_name', 'last_name', 'name_tag', 'dob',
   'address', 'city', 'state', 'zip', 'email', 'cell_phone', 'home_phone',
   'drivers_license', 'church_name', 'denomination', 'church_phone',
-  'pastor_name', 'pastor_approval', 'emmaus_year', 'date_trained',
+  'pastor_name', 'emmaus_year', 'date_trained',
   'year_released', 'doc_number', 'visitation_name', 'visitation_relationship',
 ];
 
@@ -28,6 +28,13 @@ const CHECKBOX_FIELDS = [
   'doc_trained', 'ex_offender', 'on_parole', 'on_visitation',
   'agree_statement', 'agree_manual',
 ];
+
+// The paper form uses individual checkboxes where the web form uses
+// dropdowns — translate dropdown answers into per-option checkbox fields.
+const OPTION_CHECKBOXES = {
+  gender: { Male: 'gender_male', Female: 'gender_female' },
+  role: { Layperson: 'role_layperson', Clergy: 'role_clergy', Musician: 'role_musician' },
+};
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -55,6 +62,12 @@ export async function onRequestPost(context) {
   for (const name of CHECKBOX_FIELDS) {
     // HTML checkboxes submit "on" when checked, absent when not
     fields.push({ name, default_value: form[name] === 'on' || form[name] === true });
+  }
+  for (const [formField, options] of Object.entries(OPTION_CHECKBOXES)) {
+    const selected = (form[formField] || '').toString();
+    for (const [optionValue, fieldName] of Object.entries(options)) {
+      fields.push({ name: fieldName, default_value: selected === optionValue });
+    }
   }
 
   const payload = {
