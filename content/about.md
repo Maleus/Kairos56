@@ -6,10 +6,10 @@ title: "About Kairos"
 
 Kairos Prison Ministry International is a Christian ministry serving incarcerated men, women, and youth, as well as their families. Through structured weekend programs and ongoing ministry, Kairos creates a community of love, hope, and faith inside prison walls.
 
-## The WTSP Chapter
+## The {{< chapter "chapter_name" >}}
 
-The WTSP chapter serves West Tennessee State Penitentiary and is run entirely by volunteers from local churches. Our team is made up of men who have experienced the transforming power of Christ and want to share that hope with those who need it most.
+Our chapter serves {{< chapter "facility" >}} and is run entirely by volunteers from local churches — people who have experienced the transforming power of Christ and want to share that hope with those who need it most.
 
-## Kairos 56
+## {{< event "name" >}}
 
-Our next weekend is **Kairos 56**, scheduled for September 17–20, 2026 at WTSP. A team of volunteers is currently forming and preparing. If you're interested in serving, please [contact us](/contact/).
+Our next {{< event "event_type" >}} is **{{< event "name" >}}**, scheduled for {{< event "dates" >}} at {{< event "location" >}}. A team of volunteers is currently forming and preparing. If you're interested in serving, please [apply online](/apply/) or [contact us](/contact/).

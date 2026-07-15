@@ -1,0 +1,57 @@
+# ══════════════════════════════════════════════════════════════════
+#  CHAPTER CONFIGURATION — the main file to edit for a new deployment
+#  Everything chapter/ministry-specific lives here. No code changes
+#  are needed to adapt this site for another Kairos ministry
+#  (men's, women's, Kairos Outside, Torch, etc.).
+# ══════════════════════════════════════════════════════════════════
+
+# Names & branding
+site_name: "Kairos 56"                    # shown in nav logo + page titles
+ministry_name: "Kairos Prison Ministry"
+chapter_name: "WTSP Chapter"
+facility: "West Tennessee State Penitentiary"
+facility_short: "WTSP"
+
+# The current event (weekend/retreat)
+event:
+  name: "Kairos 56"
+  dates: "October 8–11, 2026"
+  location: "WTSP"
+  # what the event is called generically on the site ("weekend", "retreat")
+  event_type: "weekend"
+
+# Terminology (lets women's ministries / Kairos Outside rename things)
+labels:
+  application: "Team Application"
+  team: "Team"
+  dashboard_title: "Team Dashboard"
+
+# Mission / vision (from Kairos International; edit if chapter-specific)
+mission: >-
+  The mission of the Kairos Prison Ministry is to share the transforming
+  love and forgiveness of Jesus Christ to impact the hearts and lives of
+  incarcerated men, women and youth, as well as their families, to become
+  loving and productive citizens of their communities.
+vision: >-
+  A Community spiritually freed from the effects of imprisonment reaching
+  all impacted by incarceration, through the love, hope, and faith found
+  in Jesus Christ.
+
+# Links
+donate_url: "https://givebutter.com/kairosprisonministry"
+
+# Public contact (shown on the Contact page)
+contact:
+  name: "Erik Dominguez"
+  email: "erikjd21@gmail.com"     # rendered obfuscated in HTML
+  phone: "901-859-3042"
+  mailing_address: ""             # optional; leave blank to hide
+
+# Online signing (DocuSeal)
+signing:
+  enabled: false        # flip to true once DocuSeal is deployed & env vars set
+  # The signing service URL, API token, and template IDs are configured as
+  # Cloudflare Pages environment variables — never in this repo. See SETUP.md.
+
+# Fallback paper application
+pdf_application: "/TeamApplication.pdf"

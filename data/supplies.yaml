@@ -1,0 +1,7 @@
+# Supply list — edit via /admin. Shown only behind team login.
+intro: "Supply list being compiled."
+items: []
+# items:
+#   - name: "Item"
+#     quantity: ""
+#     assigned_to: ""

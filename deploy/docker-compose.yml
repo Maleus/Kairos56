@@ -1,0 +1,34 @@
+# DocuSeal + Caddy (automatic HTTPS) for a single small server.
+# Usage:  SIGN_DOMAIN=sign.kairos56.org docker compose up -d
+# DNS for SIGN_DOMAIN must already point at this server.
+
+services:
+  docuseal:
+    image: docuseal/docuseal:latest
+    container_name: docuseal
+    restart: unless-stopped
+    volumes:
+      - ./docuseal-data:/data
+    environment:
+      # SQLite (default) stores everything in ./docuseal-data
+      - FORCE_SSL=${SIGN_DOMAIN}
+    expose:
+      - "3000"
+
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - SIGN_DOMAIN=${SIGN_DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  caddy-data:
+  caddy-config:

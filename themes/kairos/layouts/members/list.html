@@ -1,148 +1,85 @@
-{{ define "title" }}Team Dashboard | {{ .Site.Title }}{{ end }}
+{{ define "title" }}{{ site.Data.chapter.labels.dashboard_title }} | {{ site.Data.chapter.site_name }}{{ end }}
 
 {{ define "main" }}
-<section class="members-gate" id="gate">
+{{- $c := site.Data.chapter -}}
+{{/*
+  NOTE: This page is protected server-side by the Cloudflare Pages Function
+  at functions/members/_middleware.js. Requests without a valid session
+  cookie are redirected to the login page before this HTML is ever served.
+*/}}
+<section class="members-content">
   <div class="container">
-    <h1>Team Member Login</h1>
-    <p>Enter the team password to access the Kairos 56 dashboard.</p>
-    <form id="login-form" onsubmit="return checkPassword()">
-      <input type="password" id="password" placeholder="Password" required>
-      <button type="submit" class="btn">Login</button>
-    </form>
-    <p id="error" class="error" style="display:none">Incorrect password. Try again.</p>
-  </div>
-</section>
-
-<section class="members-content" id="content" style="display:none">
-  <div class="container">
-    <h1>Kairos 56 — Team Dashboard</h1>
-    <p class="event-info"><strong>October 8–11, 2026</strong> &middot; WTSP</p>
+    <h1>{{ $c.event.name }} — {{ $c.labels.dashboard_title }}</h1>
+    <p class="event-info"><strong>{{ $c.event.dates }}</strong> &middot; {{ $c.event.location }}</p>
 
     <div class="dashboard-grid">
       <div class="card">
         <h2>Schedule</h2>
         <table>
           <tr><th>#</th><th>Date</th><th>Notes</th></tr>
-          <tr><td>1</td><td>Sat, Aug 1</td><td><strong>Prep</strong></td></tr>
-          <tr><td>2</td><td>Sat, Aug 8</td><td></td></tr>
-          <tr><td>3</td><td>Sat, Aug 15</td><td></td></tr>
-          <tr><td>4</td><td>Sat, Aug 22</td><td></td></tr>
-          <tr><td>5</td><td>Sat, Aug 29</td><td></td></tr>
-          <tr><td>—</td><td>Sat, Sept 5</td><td>Skip — Labor Day</td></tr>
-          <tr><td>6</td><td>Sat, Sept 12</td><td></td></tr>
-          <tr><td>7</td><td>Sat, Sept 19</td><td></td></tr>
-          <tr><td>8</td><td>Sat, Sept 26</td><td></td></tr>
-          <tr><td>9</td><td>Sat, Oct 2</td><td><strong>Commissioning Dinner</strong></td></tr>
-          <tr><td>10</td><td>Sat, Oct 3</td><td>Final prep</td></tr>
-          <tr><td>—</td><td>Sun, Oct 4</td><td><strong>Cookie Packout</strong></td></tr>
-          <tr><td>—</td><td>Oct 8–11</td><td><strong>Kairos 56 Weekend</strong></td></tr>
+          {{ range site.Data.schedule.meetings }}
+          <tr><td>{{ .number }}</td><td>{{ .date }}</td><td>{{ .notes | markdownify }}</td></tr>
+          {{ end }}
         </table>
       </div>
 
       <div class="card">
         <h2>Announcements</h2>
-        <p><strong>Saturday, August 1 — First Team Meeting / Prep!</strong> Mark your calendars. More details to follow.</p>
+        {{ range site.Data.announcements.items }}
+        <div class="announcement">
+          <p><strong>{{ .title }}</strong></p>
+          {{ with .body }}<p>{{ . | markdownify }}</p>{{ end }}
+        </div>
+        {{ else }}
+        <p class="muted">No announcements yet.</p>
+        {{ end }}
       </div>
 
       <div class="card">
-        <h2>Team Roster</h2>
+        <h2>{{ $c.labels.team }} Roster</h2>
         <table>
           <tr><th>Name</th><th>Email</th><th>Phone</th></tr>
-          <tr><td>Erik Dominguez</td><td></td><td></td></tr>
-          <tr><td>EJ Williams</td><td></td><td></td></tr>
-          <tr><td>Mike Wiseman</td><td></td><td></td></tr>
-          <tr><td>Scott Jenkins</td><td></td><td></td></tr>
-          <tr><td>Henry Stratton</td><td></td><td></td></tr>
-          <tr><td>Doug Baxter</td><td></td><td></td></tr>
-          <tr><td>Cole Bosi</td><td></td><td></td></tr>
-          <tr><td>Duston White</td><td></td><td></td></tr>
+          {{ range site.Data.roster.members }}
+          <tr><td>{{ .name }}{{ with .role }} <span class="muted">({{ . }})</span>{{ end }}</td><td>{{ .email }}</td><td>{{ .phone }}</td></tr>
+          {{ end }}
         </table>
       </div>
 
       <div class="card">
-        <h2>Tasks & Assignments</h2>
-        <p><strong>Team Goal:</strong> 55 dozen cookies per team member for the weekend.</p>
-        <p style="color:var(--muted);font-size:0.9rem;">Assignments coming soon.</p>
+        <h2>Tasks &amp; Assignments</h2>
+        {{ with site.Data.tasks.intro }}<p>{{ . | markdownify }}</p>{{ end }}
+        {{ range site.Data.tasks.items }}
+        <p><strong>{{ .title }}</strong>{{ with .assignee }} — {{ . }}{{ end }}{{ with .notes }}<br>{{ . | markdownify }}{{ end }}</p>
+        {{ else }}
+        <p class="muted">Assignments coming soon.</p>
+        {{ end }}
       </div>
 
       <div class="card">
         <h2>Supply List</h2>
-        <p><em>Supply list being compiled.</em></p>
+        {{ with site.Data.supplies.intro }}<p><em>{{ . }}</em></p>{{ end }}
+        {{ if site.Data.supplies.items }}
+        <table>
+          <tr><th>Item</th><th>Qty</th><th>Assigned</th></tr>
+          {{ range site.Data.supplies.items }}
+          <tr><td>{{ .name }}</td><td>{{ .quantity }}</td><td>{{ .assigned_to }}</td></tr>
+          {{ end }}
+        </table>
+        {{ end }}
       </div>
 
       <div class="card">
         <h2>Contact</h2>
-        <p><strong>Reach out to Erik directly:</strong></p>
-        <p>Erik Dominguez<br>
-        📞 901-859-3042<br>
-        ✉️ erikjd21[at]gmail.com</p>
-        <p style="font-size:0.85rem;color:var(--muted);">Questions about Kairos 56? Don't hesitate to call or email.</p>
+        <p><strong>Reach out to {{ $c.contact.name }} directly:</strong></p>
+        <p>
+          {{ with $c.contact.phone }}📞 <a href="tel:{{ . }}">{{ . }}</a><br>{{ end }}
+          {{ with $c.contact.email }}✉️ <a href="mailto:{{ . }}">{{ . }}</a>{{ end }}
+        </p>
+        <p class="muted">Questions about {{ $c.event.name }}? Don't hesitate to call or email.</p>
       </div>
     </div>
 
-    <p class="logout"><a href="#" onclick="logout()">Log out</a></p>
+    <p class="logout"><a href="/api/logout">Log out</a></p>
   </div>
 </section>
-
-<script>
-// Password is SHA-256 hashed. Change PW_HASH when changing the password.
-// Current password: (set by Erik)
-var PW_HASH = "{{ .Site.Params.members_password_hash | default "REPLACE_ME" }}";
-
-function checkPassword() {
-  var input = document.getElementById("password").value;
-  var hash = sha256(input);
-  if (hash === PW_HASH) {
-    document.getElementById("gate").style.display = "none";
-    document.getElementById("content").style.display = "block";
-    sessionStorage.setItem("kairos_auth", "1");
-  } else {
-    document.getElementById("error").style.display = "block";
-  }
-  return false;
-}
-
-function sha256(str) {
-  var buffer = new TextEncoder().encode(str);
-  return crypto.subtle.digest("SHA-256", buffer).then(function(hash) {
-    return Array.from(new Uint8Array(hash)).map(function(b) {
-      return b.toString(16).padStart(2, "0");
-    }).join("");
-  });
-}
-
-// Check if already authenticated this session
-if (sessionStorage.getItem("kairos_auth") === "1") {
-  document.getElementById("gate").style.display = "none";
-  document.getElementById("content").style.display = "block";
-}
-
-function logout() {
-  sessionStorage.removeItem("kairos_auth");
-  document.getElementById("gate").style.display = "block";
-  document.getElementById("content").style.display = "none";
-}
-
-// Fix sha256 — crypto.subtle.digest returns a promise, so the sync checkPassword
-// can't use await. We need to restructure.
-// Override checkPassword to handle the async hash properly.
-document.getElementById("login-form").onsubmit = function(e) {
-  e.preventDefault();
-  var input = document.getElementById("password").value;
-  var buffer = new TextEncoder().encode(input);
-  crypto.subtle.digest("SHA-256", buffer).then(function(hash) {
-    var hex = Array.from(new Uint8Array(hash)).map(function(b) {
-      return b.toString(16).padStart(2, "0");
-    }).join("");
-    if (hex === PW_HASH) {
-      document.getElementById("gate").style.display = "none";
-      document.getElementById("content").style.display = "block";
-      sessionStorage.setItem("kairos_auth", "1");
-      document.getElementById("error").style.display = "none";
-    } else {
-      document.getElementById("error").style.display = "block";
-    }
-  });
-};
-</script>
 {{ end }}

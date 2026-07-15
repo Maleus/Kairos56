@@ -1,0 +1,135 @@
+# Sveltia CMS configuration — content admin at /admin/
+# Login: GitHub. As a repo admin you can use Sveltia's personal access
+# token sign-in with zero extra setup. To let non-technical admins log
+# in, deploy sveltia-cms-auth (see SETUP.md) and add base_url below.
+
+backend:
+  name: github
+  repo: Maleus/Kairos56   # ← change when redeploying for another chapter
+  branch: master
+  # base_url: https://sveltia-cms-auth.<your-subdomain>.workers.dev
+
+media_folder: static/uploads
+public_folder: /uploads
+
+site_url: https://www.kairos56.org
+
+collections:
+  - name: settings
+    label: Chapter Settings
+    files:
+      - name: chapter
+        label: Chapter Configuration
+        file: data/chapter.yaml
+        fields:
+          - { name: site_name, label: Site Name, widget: string }
+          - { name: ministry_name, label: Ministry Name, widget: string }
+          - { name: chapter_name, label: Chapter Name, widget: string }
+          - { name: facility, label: Facility (full name), widget: string }
+          - { name: facility_short, label: Facility (short), widget: string }
+          - name: event
+            label: Current Event
+            widget: object
+            fields:
+              - { name: name, label: Event Name, widget: string }
+              - { name: dates, label: Dates (display text), widget: string }
+              - { name: location, label: Location, widget: string }
+              - { name: event_type, label: "Event type word (weekend / retreat)", widget: string, default: weekend }
+          - name: labels
+            label: Terminology
+            widget: object
+            fields:
+              - { name: application, label: Application label, widget: string, default: Team Application }
+              - { name: team, label: Team label, widget: string, default: Team }
+              - { name: dashboard_title, label: Dashboard title, widget: string, default: Team Dashboard }
+          - { name: mission, label: Mission Statement, widget: text }
+          - { name: vision, label: Vision Statement, widget: text }
+          - { name: donate_url, label: Donate URL, widget: string, required: false }
+          - name: contact
+            label: Public Contact
+            widget: object
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: email, label: Email, widget: string }
+              - { name: phone, label: Phone, widget: string, required: false }
+              - { name: mailing_address, label: Mailing Address, widget: text, required: false }
+          - name: signing
+            label: Online Signing
+            widget: object
+            fields:
+              - { name: enabled, label: "Online signing enabled (requires DocuSeal — see SETUP.md)", widget: boolean, default: false }
+          - { name: pdf_application, label: Blank application PDF path, widget: string, default: /TeamApplication.pdf }
+
+  - name: team
+    label: Team Dashboard Content
+    files:
+      - name: roster
+        label: Team Roster
+        file: data/roster.yaml
+        fields:
+          - name: members
+            label: Members
+            widget: list
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: role, label: Role, widget: string, required: false }
+              - { name: email, label: Email, widget: string, required: false }
+              - { name: phone, label: Phone, widget: string, required: false }
+      - name: schedule
+        label: Meeting Schedule
+        file: data/schedule.yaml
+        fields:
+          - name: meetings
+            label: Meetings
+            widget: list
+            fields:
+              - { name: number, label: "Meeting # (or — for non-meetings)", widget: string }
+              - { name: date, label: Date, widget: string }
+              - { name: notes, label: Notes (markdown ok), widget: string, required: false }
+      - name: announcements
+        label: Announcements
+        file: data/announcements.yaml
+        fields:
+          - name: items
+            label: Announcements
+            widget: list
+            fields:
+              - { name: date, label: Date, widget: string }
+              - { name: title, label: Title, widget: string }
+              - { name: body, label: Body (markdown ok), widget: text, required: false }
+      - name: tasks
+        label: Tasks & Assignments
+        file: data/tasks.yaml
+        fields:
+          - { name: intro, label: Intro text (markdown ok), widget: text, required: false }
+          - name: items
+            label: Tasks
+            widget: list
+            required: false
+            fields:
+              - { name: title, label: Task, widget: string }
+              - { name: assignee, label: Assigned to, widget: string, required: false }
+              - { name: notes, label: Notes, widget: text, required: false }
+      - name: supplies
+        label: Supply List
+        file: data/supplies.yaml
+        fields:
+          - { name: intro, label: Intro text, widget: string, required: false }
+          - name: items
+            label: Supplies
+            widget: list
+            required: false
+            fields:
+              - { name: name, label: Item, widget: string }
+              - { name: quantity, label: Quantity, widget: string, required: false }
+              - { name: assigned_to, label: Assigned to, widget: string, required: false }
+
+  - name: pages
+    label: Site Pages
+    folder: content
+    create: false
+    delete: false
+    filter: { field: title }
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: body, label: Body, widget: markdown }

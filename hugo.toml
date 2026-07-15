@@ -1,10 +1,12 @@
-baseURL = "https://kairoswtsp.org/"
+baseURL = "https://www.kairos56.org/"
 locale = "en-us"
-title = "Kairos WTSP"
+title = "Kairos 56"
 theme = "kairos"
+
+# All chapter-specific content lives in data/chapter.yaml — edit that,
+# not this file, when redeploying for a new chapter. Only baseURL and
+# title need to change here. The team password is stored in Cloudflare
+# KV (set via the admin page), never in this repo.
 
 [params]
   description = "Kairos Prison Ministry — WTSP Chapter"
-  mission = "The mission of the Kairos Prison Ministry is to share the transforming love and forgiveness of Jesus Christ to impact the hearts and lives of incarcerated men, women and youth, as well as their families, to become loving and productive citizens of their communities."
-  vision = "A Community spiritually freed from the effects of imprisonment reaching all impacted by incarceration, through the love, hope, and faith found in Jesus Christ."
-  members_password_hash = "34a16840244d8dbc06f1197dbfdde1dcb94e95e51789dae5c090540c972e394d"

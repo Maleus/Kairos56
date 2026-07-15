@@ -1,22 +1,24 @@
+{{- $c := site.Data.chapter -}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ block "title" . }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  <title>{{ block "title" . }}{{ .Title }} | {{ site.Data.chapter.site_name }}{{ end }}</title>
+  <meta name="description" content="{{ $c.ministry_name }} — {{ $c.chapter_name }}">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header>
     <nav>
-      <a href="/" class="logo">Kairos WTSP</a>
+      <a href="/" class="logo">{{ $c.site_name }}</a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/about/">About</a>
         <a href="/apply/">Apply</a>
         <a href="/contact/">Contact</a>
         <a href="/members/" class="btn-members">Team Login</a>
-        <a href="https://givebutter.com/kairosprisonministry" class="btn-donate">♥ Donate</a>
+        {{ with $c.donate_url }}<a href="{{ . }}" class="btn-donate">♥ Donate</a>{{ end }}
       </div>
     </nav>
   </header>
@@ -26,11 +28,11 @@
   </main>
 
   <footer>
-    <p>Kairos Prison Ministry — WTSP Chapter</p>
+    <p>{{ $c.ministry_name }} — {{ $c.chapter_name }}</p>
     <p>A Community spiritually freed from the effects of imprisonment.</p>
-    <p style="font-size:0.8rem;margin-top:0.5rem;">
-      <a href="/privacy/" style="color:var(--muted);">Privacy Policy</a> &middot;
-      <a href="/terms/" style="color:var(--muted);">Terms of Service</a>
+    <p class="footer-links">
+      <a href="/privacy/">Privacy Policy</a> &middot;
+      <a href="/terms/">Terms of Service</a>
     </p>
   </footer>
 </body>

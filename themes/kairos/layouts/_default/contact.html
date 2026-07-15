@@ -1,0 +1,28 @@
+{{ define "main" }}
+{{- $c := site.Data.chapter -}}
+<section class="page">
+  <div class="container">
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+    <div class="card contact-card">
+      <p><strong>{{ $c.contact.name }}</strong></p>
+      {{ with $c.contact.phone }}<p>📞 <a href="tel:{{ . }}">{{ . }}</a></p>{{ end }}
+      {{ with $c.contact.email }}
+      {{- $parts := split . "@" -}}
+      <p>✉️ <span class="email-obf" data-u="{{ index $parts 0 }}" data-d="{{ index $parts 1 }}"></span></p>
+      {{ end }}
+      {{ with $c.contact.mailing_address }}<p>📫 {{ . | markdownify }}</p>{{ end }}
+    </div>
+  </div>
+</section>
+<script>
+  // Assemble email client-side to reduce scraping
+  document.querySelectorAll('.email-obf').forEach(function (el) {
+    var addr = el.dataset.u + '@' + el.dataset.d;
+    var a = document.createElement('a');
+    a.href = 'mailto:' + addr;
+    a.textContent = addr;
+    el.appendChild(a);
+  });
+</script>
+{{ end }}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site Admin — Change Team Password</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <meta name="robots" content="noindex">
+</head>
+<body>
+  <header>
+    <nav><a href="/" class="logo">← Back to site</a></nav>
+  </header>
+  <main>
+    <div class="login-page">
+      <h1>Change Team Password</h1>
+      <p>Requires the site admin key. The new password takes effect immediately for the /members/ login.</p>
+      <form id="pw-form" style="flex-direction: column; gap: 0.75rem;">
+        <input type="password" name="admin_key" placeholder="Admin key" required>
+        <input type="password" name="new_password" placeholder="New team password (8+ chars)" required minlength="8">
+        <button type="submit" class="btn">Update Password</button>
+      </form>
+      <p id="status" aria-live="polite"></p>
+    </div>
+  </main>
+  <script>
+    document.getElementById('pw-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var status = document.getElementById('status');
+      status.textContent = 'Updating…';
+      var data = Object.fromEntries(new FormData(e.target).entries());
+      var res = await fetch('/api/team-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      status.textContent = await res.text();
+      if (res.ok) e.target.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,25 +1,26 @@
-{{ define "title" }}{{ .Site.Title }}{{ end }}
+{{ define "title" }}{{ site.Data.chapter.site_name }} — {{ site.Data.chapter.ministry_name }}{{ end }}
 
 {{ define "main" }}
+{{- $c := site.Data.chapter -}}
 <section class="hero">
   <div class="hero-content">
-    <h1>Kairos Prison Ministry</h1>
-    <p class="hero-subtitle">WTSP Chapter</p>
-    <p class="hero-text">{{ .Site.Params.vision }}</p>
+    <h1>{{ $c.ministry_name }}</h1>
+    <p class="hero-subtitle">{{ $c.chapter_name }}</p>
+    <p class="hero-text">{{ $c.vision }}</p>
   </div>
 </section>
 
 <section class="mission">
   <div class="container">
     <h2>Our Mission</h2>
-    <p>{{ .Site.Params.mission }}</p>
+    <p>{{ $c.mission }}</p>
   </div>
 </section>
 
 <section class="vision">
   <div class="container">
     <h2>Our Vision</h2>
-    <p>{{ .Site.Params.vision }}</p>
+    <p>{{ $c.vision }}</p>
   </div>
 </section>
 
@@ -27,10 +28,12 @@
   <div class="container">
     <h2>Get Involved</h2>
     <p>Interested in serving with Kairos? We'd love to hear from you.</p>
-    <a href="/apply/" class="btn" style="margin-right:0.75rem;">📋 Online Application</a>
-    <a href="/TeamApplication.pdf" class="btn" style="margin-right:0.75rem;">📄 Download PDF</a>
-    <a href="/contact/" class="btn">Contact Us</a>
-    <a href="https://givebutter.com/kairosprisonministry" class="btn-donate" style="margin-left:0.75rem;">♥ Donate</a>
+    <div class="cta-buttons">
+      <a href="/apply/" class="btn">📋 {{ $c.labels.application }}</a>
+      <a href="{{ $c.pdf_application }}" class="btn btn-secondary">📄 Download PDF</a>
+      <a href="/contact/" class="btn btn-secondary">Contact Us</a>
+      {{ with $c.donate_url }}<a href="{{ . }}" class="btn-donate">♥ Donate</a>{{ end }}
+    </div>
   </div>
 </section>
 {{ end }}

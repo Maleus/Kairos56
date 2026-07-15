@@ -245,3 +245,46 @@ footer p + p { margin-top: 0.25rem; }
   section { padding: 2.5rem 1.25rem; }
   .dashboard-grid { grid-template-columns: 1fr; }
 }
+
+/* ── v2 additions ─────────────────────────────────────────── */
+
+.muted { color: var(--muted); font-size: 0.9rem; }
+.footer-links a { color: var(--muted); }
+.footer-links { font-size: 0.8rem; margin-top: 0.5rem; }
+.cta-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; align-items: center; }
+.btn-secondary { background: var(--card-bg); color: var(--accent); border: 1px solid var(--accent); }
+.btn-secondary:hover { background: var(--accent-bg); }
+
+/* Contact card */
+.contact-card { max-width: 420px; margin-top: 1.5rem; }
+.contact-card p { margin-bottom: 0.5rem; color: var(--text); }
+
+/* Apply form (moved from inline styles) */
+.apply-form { max-width: 780px; }
+.apply-form .lede { color: var(--muted); margin-bottom: 0.75rem; }
+.apply-form .lede-alt { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.apply-form fieldset { border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; background: var(--card-bg); }
+.apply-form legend { font-weight: 700; font-size: 1.1rem; color: var(--accent); padding: 0 0.5rem; }
+.apply-form label { display: block; font-weight: 600; font-size: 0.85rem; margin: 0.75rem 0 0.25rem; color: var(--text); }
+.apply-form input, .apply-form select, .apply-form textarea { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; font-family: inherit; }
+.apply-form .row { display: flex; gap: 1rem; flex-wrap: wrap; }
+.apply-form .row > div { flex: 1; min-width: 140px; }
+.apply-form .checkbox-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
+.apply-form .checkbox-row input[type="checkbox"] { width: auto; }
+.apply-form .checkbox-row label { margin: 0; font-weight: 400; }
+.apply-form .btn-row { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.apply-form .agreement-text { font-size: 0.85rem; color: var(--text); margin-bottom: 1rem; }
+.apply-form .agreement-text p { margin-bottom: 0.5rem; }
+.required::after { content: " *"; color: #dc2626; }
+.form-status { margin-top: 1rem; color: var(--muted); }
+
+/* Announcements */
+.announcement { margin-bottom: 1rem; }
+.announcement p { margin-bottom: 0.25rem; }
+
+/* Team login page (served by the members middleware) */
+.login-page { max-width: 400px; margin: 3rem auto; text-align: center; padding: 0 1rem; }
+.login-page h1 { font-size: 1.6rem; color: var(--accent); margin-bottom: 0.5rem; }
+.login-page p { color: var(--muted); margin-bottom: 1.5rem; }
+.login-page form { display: flex; gap: 0.5rem; }
+.login-page input[type="password"] { flex: 1; padding: 0.7rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; }
