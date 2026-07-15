@@ -84,6 +84,22 @@ export async function onRequestPost(context) {
   };
 
   const apiBase = env.DOCUSEAL_API_URL || `${env.DOCUSEAL_URL}/api`;
+
+  // DocuSeal rejects submissions containing field names not present in the
+  // template ("Unknown field"). Fetch the template's field list and only
+  // prefill fields that actually exist — this also makes the template
+  // customizable per-chapter without code changes.
+  const tplRes = await fetch(`${apiBase}/templates/${env.DOCUSEAL_TEMPLATE_ID}`, {
+    headers: { 'X-Auth-Token': env.DOCUSEAL_API_TOKEN },
+  });
+  if (tplRes.ok) {
+    const tpl = await tplRes.json();
+    const known = new Set((tpl.fields || []).map((f) => f.name));
+    for (let i = fields.length - 1; i >= 0; i--) {
+      if (!known.has(fields[i].name)) fields.splice(i, 1);
+    }
+  }
+
   const res = await fetch(`${apiBase}/submissions`, {
     method: 'POST',
     headers: {
