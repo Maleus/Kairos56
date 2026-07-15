@@ -96,7 +96,13 @@ export async function onRequestPost(context) {
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
     console.log('DocuSeal error', res.status, detail);
-    return json({ error: 'Could not prepare the application for signing. Please try again or use the PDF.' }, 502);
+    return json({
+      error: 'Could not prepare the application for signing. Please try again or use the PDF.',
+      // Diagnostic info (safe: no secrets in DocuSeal error bodies).
+      // TODO: remove `detail` once the integration is verified.
+      docuseal_status: res.status,
+      detail: detail.slice(0, 300),
+    }, 502);
   }
 
   const submitters = await res.json();
