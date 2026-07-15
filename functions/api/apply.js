@@ -75,7 +75,7 @@ export async function onRequestPost(context) {
     send_email: true, // signing-link email as backup if they navigate away
     submitters: [
       {
-        role: 'Applicant',
+        role: 'First Party', // must match the party name in the DocuSeal template
         name: `${form.first_name} ${form.last_name}`.trim(),
         email: form.email.toString().trim(),
         fields,
