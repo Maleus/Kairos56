@@ -1,5 +1,5 @@
 # DocuSeal + Caddy (automatic HTTPS) for a single small server.
-# Usage:  SIGN_DOMAIN=sign.kairos56.org docker compose up -d
+# Usage:  SIGN_DOMAIN=sign.kairos56.com docker compose up -d
 # DNS for SIGN_DOMAIN must already point at this server.
 
 services:

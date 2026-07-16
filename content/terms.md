@@ -8,7 +8,7 @@ title: "Terms of Service"
 
 ### 1. Acceptance of Terms
 
-By accessing kairos56.org or joining the Kairos 56 team roster, you agree to these terms. If you do not agree, please do not use the site or services.
+By accessing kairos56.com or joining the Kairos 56 team roster, you agree to these terms. If you do not agree, please do not use the site or services.
 
 ### 2. Service Description
 

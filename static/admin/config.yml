@@ -6,13 +6,13 @@
 backend:
   name: github
   repo: Maleus/Kairos56   # ← change when redeploying for another chapter
-  branch: master
+  branch: v2              # ← switch to main after the v2 → main cutover
   # base_url: https://sveltia-cms-auth.<your-subdomain>.workers.dev
 
 media_folder: static/uploads
 public_folder: /uploads
 
-site_url: https://www.kairos56.org
+site_url: https://www.kairos56.com
 
 collections:
   - name: settings

@@ -4,9 +4,9 @@
 
 ## Project
 
-Rebuild of kairos56.org (Kairos Prison Ministry volunteer site, WTSP chapter) as a
+Rebuild of kairos56.com (Kairos Prison Ministry volunteer site, WTSP chapter) as a
 reusable template. Repo: `github.com/Maleus/Kairos56`, branch **v2** (production).
-`main` = old site, still live on Netlify at www.kairos56.org — do NOT merge v2
+`main` = old site, still live on Netlify at www.kairos56.com — do NOT merge v2
 into main until DNS cutover (members page would be exposed unprotected on Netlify).
 
 **Stack:** Hugo static site + Cloudflare Pages (project `kairos56`, kairos56.pages.dev,
@@ -46,20 +46,20 @@ guide in `SETUP.md`.
    `functions/api/apply.js` currently returns DocuSeal error details
    (`docuseal_status`, `detail`) in error responses — REMOVE once verified.
 
-2. **DNS cutover (the active problem):** Erik wants www.kairos56.org moved from
+2. **DNS cutover (the active problem):** Erik wants www.kairos56.com moved from
    Netlify to Cloudflare Pages. DNS is currently managed by **Netlify DNS**;
    Netlify's UI has no record "edit" (delete+recreate is normal there) and
    nameservers can't be changed from the Netlify dashboard — **nameservers are
    changed at the domain REGISTRAR, not at Netlify**. Unresolved question: where
-   is kairos56.org registered? (If registered through Netlify, custom nameservers
+   is kairos56.com registered? (If registered through Netlify, custom nameservers
    are under Domains → the domain → Name servers, or require Netlify support.)
    Recommended path:
-   a. Cloudflare dashboard → Add a domain → kairos56.org (free plan). Cloudflare
+   a. Cloudflare dashboard → Add a domain → kairos56.com (free plan). Cloudflare
       auto-imports existing records and shows two assigned nameservers.
    b. At the registrar, replace nameservers with Cloudflare's. (Netlify keeps
       serving the site during propagation — zero downtime.)
    c. When the zone is active in Cloudflare: Pages project → Custom domains →
-      add www.kairos56.org (+ apex redirect). Remove the old Netlify A/NETLIFY
+      add www.kairos56.com (+ apex redirect). Remove the old Netlify A/NETLIFY
       records in the Cloudflare zone.
    d. Alternative if nameservers truly can't move: keep Netlify DNS, delete the
       Netlify site records, add `CNAME www → kairos56.pages.dev` and add the

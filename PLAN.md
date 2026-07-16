@@ -6,7 +6,7 @@
 
 ## 1. Executive Summary
 
-Rebuild kairos56.org as a clean, redeployable template for any Kairos chapter, with three major upgrades:
+Rebuild kairos56.com as a clean, redeployable template for any Kairos chapter, with three major upgrades:
 
 1. **Open-source e-signature (DocuSeal, self-hosted)** for the team application and Tennessee state documents — replacing download/print/sign as the primary path (kept as fallback).
 2. **Admin-editable team dashboard** (roster, schedule, announcements, team password) via Sveltia CMS — no coding required to update the site.
@@ -29,7 +29,7 @@ The existing DeepSeek-generated Hugo site works but has structural problems that
 - Dead code: an unused, broken `sha256()` function in `members/list.html` with a comment admitting it doesn't work, then a second implementation patched over it.
 - The generated "application" is print-styled HTML, not the actual Kairos PDF — the chair still receives a nonstandard document.
 - Inconsistent/stale content: header says "Western TN SP #55", dates reference a dropped July 25 meeting, apply page and dashboard disagree.
-- **Wrong domain in config:** `hugo.toml` sets `baseURL = "https://kairoswtsp.org/"` — this site is **kairos56.org** (a different site). Must be corrected in the rebuild.
+- **Wrong domain in config:** `hugo.toml` sets `baseURL = "https://kairoswtsp.org/"` — this site is **kairos56.com** (a different site). Must be corrected in the rebuild.
 - All dashboard content (roster, schedule, announcements) is hardcoded in templates — nothing is editable without editing HTML and redeploying.
 
 ### What's worth keeping
@@ -52,7 +52,7 @@ The existing DeepSeek-generated Hugo site works but has structural problems that
                           git push / CMS commit
                                     │
      ┌──────────────────────────────▼───────────────────────────┐
-     │  CLOUDFLARE PAGES (free)          kairos56.org         │
+     │  CLOUDFLARE PAGES (free)          kairos56.com         │
      │  • Static Hugo site (auto-builds on every commit)        │
      │  • Pages Functions (serverless):                         │
      │     – /members gate: server-side password check,         │
@@ -66,7 +66,7 @@ The existing DeepSeek-generated Hugo site works but has structural problems that
      └──────────────────────────────┬───────────────────────────┘
                                     │ REST API (token)
      ┌──────────────────────────────▼───────────────────────────┐
-     │  DIGITALOCEAN DROPLET ($6–12/mo)  sign.kairos56.org    │
+     │  DIGITALOCEAN DROPLET ($6–12/mo)  sign.kairos56.com    │
      │  • DocuSeal (Docker Compose, single container)           │
      │  • Caddy reverse proxy — automatic HTTPS                 │
      │  • SQLite (built-in default) + nightly backup to         │
@@ -104,7 +104,7 @@ The existing DeepSeek-generated Hugo site works but has structural problems that
 
 Droplet sizing: start with the **$6/mo Basic (1 GB RAM)** + 2 GB swap file; DocuSeal (Rails) runs fine at this scale (a team of ~40 signers is tiny load). If it feels sluggish, resize to $12/mo (2 GB) in one click. Add weekly droplet snapshots (~$0.72/mo) or nightly SQLite backup.
 
-DNS moves to Cloudflare (free): `kairos56.org` → Pages, `sign.kairos56.org` → droplet IP.
+DNS moves to Cloudflare (free): `kairos56.com` → Pages, `sign.kairos56.com` → droplet IP.
 
 ---
 
@@ -181,12 +181,12 @@ Everything chapter-specific lives in `data/chapter.yaml` + environment variables
 ## 9. Build Plan (Phases)
 
 ### Phase 0 — Prep (½ day)
-- [ ] Create Cloudflare account; add kairos56.org zone. Site is currently on Netlify — if DNS is managed by Netlify DNS, switch nameservers at the registrar to Cloudflare (Cloudflare auto-imports records); if DNS is at the registrar, just repoint nameservers. Netlify keeps serving the site until the Phase 5 cutover, so zero downtime.
-- [ ] Create DO droplet ($6 Basic, Ubuntu 24.04), point `sign.kairos56.org` at it.
+- [ ] Create Cloudflare account; add kairos56.com zone. Site is currently on Netlify — if DNS is managed by Netlify DNS, switch nameservers at the registrar to Cloudflare (Cloudflare auto-imports records); if DNS is at the registrar, just repoint nameservers. Netlify keeps serving the site until the Phase 5 cutover, so zero downtime.
+- [ ] Create DO droplet ($6 Basic, Ubuntu 24.04), point `sign.kairos56.com` at it.
 - [ ] New GitHub repo `kairos-chapter-site` (or restructure this one in a `v2` branch).
 
 ### Phase 1 — DocuSeal up (½ day)
-- [ ] Docker Compose + Caddy on droplet; HTTPS live at sign.kairos56.org.
+- [ ] Docker Compose + Caddy on droplet; HTTPS live at sign.kairos56.com.
 - [ ] SMTP config (Gmail app password or free Brevo SMTP) so DocuSeal can email signing links/completed docs.
 - [ ] Upload Team Application PDF, build the field template, record field names + template ID.
 - [ ] Placeholder TN docs template.

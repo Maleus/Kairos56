@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # One-shot DocuSeal server setup for Ubuntu 24.04 (DigitalOcean droplet).
-# Run as root:  bash setup.sh sign.kairos56.org
+# Run as root:  bash setup.sh sign.kairos56.com
 set -euo pipefail
 
-SIGN_DOMAIN="${1:?Usage: bash setup.sh <sign-domain>  e.g. bash setup.sh sign.kairos56.org}"
+SIGN_DOMAIN="${1:?Usage: bash setup.sh <sign-domain>  e.g. bash setup.sh sign.kairos56.com}"
 
 echo "==> Updating system"
 apt-get update -y && apt-get upgrade -y

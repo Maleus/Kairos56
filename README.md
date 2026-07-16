@@ -1,7 +1,7 @@
 # Kairos Chapter Site Template
 
 Website template for Kairos Prison Ministry chapters — currently powering
-**Kairos 56** at West Tennessee State Penitentiary ([kairos56.org](https://www.kairos56.org)).
+**Kairos 56** at West Tennessee State Penitentiary ([kairos56.com](https://www.kairos56.com)).
 
 What it provides:
 
