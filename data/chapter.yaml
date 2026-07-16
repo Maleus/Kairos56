@@ -55,3 +55,15 @@ signing:
 
 # Fallback paper application
 pdf_application: "/TeamApplication.pdf"
+
+# Guest form (shown on the homepage; for weekend guests, not team members)
+guest_form:
+  enabled: true
+  title: "Attending as a Guest?"
+  description: >-
+    Guests attending the Kairos 56 closing must complete a background
+    check form in advance. Fill it out online below — it only takes a
+    couple of minutes, and no signature is needed.
+  button_label: "📝 Guest Background Check Form"
+  url: "https://docuseal.com/d/FEknNngR9oe3b1"
+  pdf: "/NCIC-Criminal-History-Request.pdf"   # print-at-home fallback; blank to hide

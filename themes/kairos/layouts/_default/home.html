@@ -24,6 +24,19 @@
   </div>
 </section>
 
+{{ with $c.guest_form }}{{ if .enabled }}
+<section class="guest-form">
+  <div class="container">
+    <h2>{{ .title }}</h2>
+    <p>{{ .description }}</p>
+    <div class="cta-buttons">
+      <a href="{{ .url }}" class="btn">{{ .button_label }}</a>
+      {{ with .pdf }}<a href="{{ . }}" class="btn btn-secondary">📄 Print the PDF instead</a>{{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}{{ end }}
+
 <section class="cta">
   <div class="container">
     <h2>Get Involved</h2>

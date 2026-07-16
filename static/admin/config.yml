@@ -59,6 +59,17 @@ collections:
             fields:
               - { name: enabled, label: "Online signing enabled (requires DocuSeal — see SETUP.md)", widget: boolean, default: false }
           - { name: pdf_application, label: Blank application PDF path, widget: string, default: /TeamApplication.pdf }
+          - name: guest_form
+            label: Guest Form (homepage)
+            widget: object
+            required: false
+            fields:
+              - { name: enabled, label: Show on homepage, widget: boolean, default: false }
+              - { name: title, label: Section title, widget: string, required: false }
+              - { name: description, label: Description, widget: text, required: false }
+              - { name: button_label, label: Button label, widget: string, required: false }
+              - { name: url, label: "Form URL (e.g. DocuSeal share link)", widget: string, required: false }
+              - { name: pdf, label: "Fallback PDF path (blank to hide)", widget: string, required: false }
 
   - name: team
     label: Team Dashboard Content
