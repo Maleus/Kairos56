@@ -218,6 +218,15 @@ Everything chapter-specific lives in `data/chapter.yaml` + environment variables
 
 ---
 
+## 9b. Phase 2 (post-launch, agreed July 15)
+
+**Non-technical leader editing:** move team-dashboard data (roster, schedule,
+announcements, supplies, tasks) from git data files into Cloudflare KV, with a
+custom password-gated "Leader Edit" page (same auth pattern as team login —
+leader password, plain HTML forms, instant updates, no GitHub accounts).
+Sveltia CMS remains for rarely-changed site text. ~1 day build; also ships in
+the template for other chapters.
+
 ## 10. Open Items / Decisions Needed
 
 1. **TN state document PDFs** — Erik obtaining this weekend. Determines whether they join the applicant flow or live behind the members login, and whether any require wet ink or countersignature.
