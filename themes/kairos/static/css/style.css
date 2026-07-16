@@ -288,3 +288,6 @@ footer p + p { margin-top: 0.25rem; }
 .login-page p { color: var(--muted); margin-bottom: 1.5rem; }
 .login-page form { display: flex; gap: 0.5rem; }
 .login-page input[type="password"] { flex: 1; padding: 0.7rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; }
+
+/* Leader tools bar on team dashboard */
+.leader-tools { display: flex; align-items: center; gap: 1rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
